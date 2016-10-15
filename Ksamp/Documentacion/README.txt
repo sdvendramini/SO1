@@ -1,36 +1,89 @@
-Parte A 
+ksamp Program version 1.0 14/10/2016 
+======================================== 
+Nombre y Apellido: Esteban Tissot  
+E-mail: egtissot@gmail.com  
+Matricula: 35276396  
 
-Buscar información acerca estructura del directorio ​ /proc​ , y averiguar los siguientes datos, teniendo en cuenta la versión de kernel que está corriendo: 
+INFORMACION GENERAL  
+--------------------
 
-1. Tipo y modelo de CPU. 
-2. Versión del kernel. 
-3. Tiempo en días, horas, minutos y segundos que han transcurrido desde que se inició el sistema operativo. 
-4. Cuánto tiempo de CPU ha sido empleado para procesos de usuario, de sistema y cuando tiempo no se usó. 
-5. Cuánta memoria tiene y cuánta está disponible. 
-6. Cuántos sistemas de archivo soporta el kernel 
-7. Cuántos pedidos de lectura/escritura a disco se han realizado. 
-8. Cuántos cambios de contexto han sucedido. 
-9. Cuántos procesos se crearon desde que inició el sistema. 
+-ksamp es un programa que provee de informacion sobre el sistema, muestra  
+ datos sobre el hardware, sistema operativo y algunas estadisticas.  
 
-INFO:
-http://www.linuxtotal.com.mx/index.php?cont=info_admon_016
+-ksamp solo puede ejecutarce en sistemas operativos basados en LINUX  
+ debido a que hace uso del sistema de archivo /proc.  
 
-http://www.tldp.org/pub/Linux/docs/ldp-archived/system-admin-guide/translations/es/html/ch04s07.html
+-Si no se pone le guion "-" antes de las opciones, el programa no las  
+ reconoce.
 
+-La fecha y hora son las correspondientes al meridiano de Greenwich  
+ (UTC 00:00). Dependiendo del lugar en el que se este se debe modificar  
+ segun <https://es.wikipedia.org/wiki/Huso_horario#UTC.C2.B100:00.2C_Z>  
+ EJEMPLO: Argentina se encuentra en la zona horaria -03:00, es decir  
+ que ksamp muestra 3 horas mas de las que hay en Argentina.  
 
+COMPILACION  
+------------  
 
-/proc/uptime: Un archivo pequeño que solo tiene dos números: por cuantos segundos tu sistema ha estado encendido, y cuantos segundos ha estado inactivo.
+-Una vez que se descargo y se descomprimio el archivo ksamp.tar.gz  
+ nos posicionamos en la carpeta donde se encuentra el archivo "ksamp.c"  
+ y habrimos una terminal (click derecho -> Abrir en Terminal).  
 
+-En la Terminal escribimos make y hacemos enter, este comando compilara  
+ el programa, creara algunos archivos en la carpeta y quedara listo para  
+ su ejecucion.
 
->> cat /proc/cpuinfo (1)
->> cat /proc/version (2)
->> cat /proc/uptime (3)
->> cat /proc/stat (4)
->> cat /proc/meminfo (5)
->> cat /proc/filesystems (6) 
->> cat /proc/diskstats (7)		info: https://listas.usla.org.ar/pipermail/lugna/2006-September/004523.html
->> cat /proc/stat (8)
->> cat /proc/stat (9) 
+-Si se ejecuta el comando make clean se elimina el archivo ksamp.o  
 
-practico 1: 
- -Capitulo 7 advanced linux programming
+EJECUCION  
+----------  
+
+-En la Terminal escribimos ./ksamp [OPCIONES] [ARGUMENTO1] [ARGUMENTO2]  
+
+DESCRIPCION  
+------------  
+
+-ksamp  
+        Nombre del Equipo, Fecha y Hora, Tipo y Modelo de CPU, Tiempo  
+        transcurrido desde que se incio, Cantidad de sistemas de  
+        archivo soportados por el kernel.  
+
+-ksamp -s  
+        Informacion de "ksamp" mas: Tiempo de CPU, Cantidad de cambio  
+        de contexto, Fecha y Hora de inicio de sistema, Cantidad de  
+	procesos creados.  
+
+-ksamp -l a b  
+        Informacion de "ksamp -s" mas:Peticiones a disco, Memoria total  
+	y disponible, promedio de carga de 1 minuto en intervalos de  
+	"a" segundos durante "b" segundos.  
+
+-ksamp -l -h a b  
+        Informacion de "ksamp -l" La opcion -h devuelve valores de  
+	memoria en MB.  
+
+-Si se escribe algun argumento u opcion no valida, se obtendra un  
+ mensaje de error y se mostrara la informacion descripta.
+
+DEPENDENCIAS  
+-------------  
+
+-Cabecera.h  
+	Contiene las funciones para obtener el nombre de equipo, la  
+	fecha y la hora. Hace uso de los directorios /proc/hostname  
+	y /proc/driver/rtc.  
+
+-ParteB.h  
+	Contiene funciones para obtener el tipo y modelo de CPU, version  
+	del kernel, cantidad de tiempo transcurrido desde que se inicio  
+	el sistema y cantidad de archivos soportados por el kernel.  
+	Manipula los directorios: /proc/cpuinfo , /proc/version ,  
+	/proc/uptime , /proc/filesystems.  
+
+-ParteC.h  
+	Contiene funciones para la opcion "ksamp -s". Hace uso del  
+	directorio /proc/stat.  
+
+-ParteD.h  
+	Contiene funciones para la opcion "ksamp -l a b". Hace uso de  
+	los directorios /proc/diskstats , /proc/meminfo , /proc/loadavg.  

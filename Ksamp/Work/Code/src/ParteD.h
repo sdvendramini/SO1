@@ -35,25 +35,25 @@ void petdisc(){
 //-------------------------------- Memoria ----------------------------------//
 // cat /proc/meminfo
 
-void inforam(int c){
-	int memtotal, memfree, memdisp;
+void inforam(int hflag){
+	float memtotal, memfree, memdisp;
 	FILE *fmeminfo;
 
 	fmeminfo=fopen("/proc/meminfo","r");
-	fscanf(fmeminfo,"MemTotal: %d kB \n",&memtotal);
-	fscanf(fmeminfo,"MemFree: %d kB\n",&memfree);
-	fscanf(fmeminfo,"MemAvailable: %d kB",&memdisp);
+	fscanf(fmeminfo,"MemTotal: %f kB \n",&memtotal);
+	fscanf(fmeminfo,"MemFree: %f kB\n",&memfree);
+	fscanf(fmeminfo,"MemAvailable: %f kB",&memdisp);
 	fclose(fmeminfo);
 
-	if (c==1){
-		printf("Memoria Total: %d kB\n", memtotal);
-		//printf("Memoria Free: %d kB\n", memfree);
-		printf("Memoria Disponible: %d kB\n", memdisp);
+	if (hflag==1){
+		printf("Memoria Total: %.2f MB\n", memtotal/1024);
+		//printf("Memoria Free: %.2f kB\n", memfree/1024);
+		printf("Memoria Disponible: %.2f MB\n", memdisp/1024);
 	}
 	else{
-		printf("Memoria Total: %d MB\n", memtotal/1024);
-		//printf("Memoria Free: %d kB\n", memfree);
-		printf("Memoria Disponible: %d MB\n", memdisp/1024);
+		printf("Memoria Total: %f kB\n", memtotal);
+		//printf("Memoria Free: %f kB\n", memfree);
+		printf("Memoria Disponible: %f kB\n", memdisp);
 	}	
 }
 
@@ -69,5 +69,5 @@ void carga(){
 	fscanf(floadavg,"%f",&carga);
 	fclose(floadavg);
 
-	printf("Carga: %f\n", carga);
+	printf("Carga: %.2f\n", carga);
 }
